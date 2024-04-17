@@ -1,0 +1,33 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+// src/routes/index.ts
+const express_1 = __importDefault(require("express"));
+const blogs_1 = __importDefault(require("./blogs"));
+const users_1 = __importDefault(require("./users"));
+const prices_1 = __importDefault(require("./prices"));
+const services_1 = __importDefault(require("./services"));
+const projects_1 = __importDefault(require("./projects"));
+const contacts_1 = __importDefault(require("./contacts"));
+const uploads_1 = __importDefault(require("./uploads"));
+const files_1 = __importDefault(require("./files"));
+const commons_1 = __importDefault(require("./commons"));
+const inboxes_1 = __importDefault(require("./inboxes"));
+const connectionsType_1 = __importDefault(require("./connectionsType"));
+const feedbacks_1 = __importDefault(require("./feedbacks"));
+const router = express_1.default.Router();
+router.use(blogs_1.default);
+router.use(users_1.default);
+router.use(prices_1.default);
+router.use(services_1.default);
+router.use(projects_1.default);
+router.use(contacts_1.default);
+router.use(uploads_1.default);
+router.use(files_1.default);
+router.use(commons_1.default);
+router.use(inboxes_1.default);
+router.use(connectionsType_1.default);
+router.use(feedbacks_1.default);
+exports.default = router;
