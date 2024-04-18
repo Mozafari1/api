@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
     "migrate": "node-pg-migrate",
-"migrate-up": "if [ \"$NODE_ENV\" = \"production\" ]; then export DATABASE_URL=\"$DATABASE_URL?sslmode=require\" PGSSLMODE=no-verify; npm run migrate up; else npm run migrate up; fi"
+"migrate-up": "if [ \"$NODE_ENV\" = \"production\" ]; then PGSSLMODE=no-verify DATABASE_URL=\"$DATABASE_URL?sslmode=require\" npm run migrate up; else npm run migrate up; fi"
   },
   "keywords": [],
   "author": "",
