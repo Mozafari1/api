@@ -8,5 +8,6 @@ module.exports = {
   password: process.env.DATABASE_PASSWORD || '',
   port: process.env.DATABASE_PORT || 5432,
   dir: './migrations',  // Stien til migrasjonsfilene
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
+ ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined
+
 };
