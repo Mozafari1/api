@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
     "migrate": "node-pg-migrate",
-"migrate-up": "DATABASE_URL=postgres://snjlmhnbkqtmge:fd7d4aa2044df9387a996f1abb1065c86c7a6c633381afbe1b937329cb0e2502@ec2-3-230-24-12.compute-1.amazonaws.com:5432/d4lj7pr687l4r2 npm run migrate up;"
+"migrate-up": "DATABASE_URL=postgres://snjlmhnbkqtmge:fd7d4aa2044df9387a996f1abb1065c86c7a6c633381afbe1b937329cb0e2502@ec2-3-230-24-12.compute-1.amazonaws.com:5432/d4lj7pr687l4r2?sslmode=require npm run migrate up;"
   },
   "keywords": [],
   "author": "",
