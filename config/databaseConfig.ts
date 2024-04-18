@@ -7,5 +7,5 @@ export default {
   password: process.env.DATABASE_PASSWORD || '',
   schema: 'public',
   migrationsTable: 'migrations',
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined  // Endret fra null til undefined
+  ssl: { rejectUnauthorized: false }  
 };
