@@ -1,3 +1,4 @@
+require('dotenv').config(); 
 module.exports = {
   connectionString: process.env.DATABASE_URL, // Bruk Heroku DATABASE_URL direkte
   host: process.env.DATABASE_HOST || 'localhost',
