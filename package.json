@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
     "migrate": "node-pg-migrate",
-"migrate-up": "if [ \"$NODE_ENV\" = \"production\" ]; then DATABASE_URL=$DATABASE_URL; else DATABASE_URL=$DEVELOPMENT_DATABASE_URL; fi npm run migrate up"
+  "migrate-up": "if [ \"$NODE_ENV\" = \"production\" ]; then export DATABASE_URL=$DATABASE_URL; else export DATABASE_URL=$DEVELOPMENT_DATABASE_URL; fi; npm run migrate up"
   },
   "keywords": [],
   "author": "",
