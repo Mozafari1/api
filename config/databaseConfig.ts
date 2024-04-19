@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
-
+console.log('databaseConfig:', process.env.DATABASE_URL);
 const databaseConfig = {
   connectionString: isProduction
     ? process.env.DATABASE_URL // Fjernet unødvendige anførselstegn rundt variabelen

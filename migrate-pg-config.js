@@ -1,6 +1,6 @@
 require('dotenv').config();
 const isProduction = process.env.NODE_ENV === 'production';
-
+console.log('Mig:', process.env.DATABASE_URL);
 module.exports = {
     connectionString: isProduction
         ?process.env.DATABASE_URL
