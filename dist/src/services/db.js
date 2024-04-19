@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
 const databaseConfig_1 = __importDefault(require("../../config/databaseConfig"));
-console.log('Database Configuration:', databaseConfig_1.default);
+console.log('Database Configuration:', databaseConfig_1.default.connectionString);
 const pool = new pg_1.Pool({
     connectionString: databaseConfig_1.default.connectionString,
     ssl: databaseConfig_1.default.ssl
