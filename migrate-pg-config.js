@@ -5,6 +5,6 @@ module.exports = {
     connectionString: isProduction
         ? `${process.env.DATABASE_URL}?sslmode=require`
         : process.env.DEVELOPMENT_DATABASE_URL,
+    ssl: isProduction ? { rejectUnauthorized: false } : undefined,
     dir: './migrations',
-    ssl: isProduction ? { rejectUnauthorized: false } : undefined
 };

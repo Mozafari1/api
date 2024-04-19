@@ -6,9 +6,9 @@ const databaseConfig = {
   connectionString: isProduction 
     ? `${process.env.DATABASE_URL}?sslmode=require` 
     : process.env.DEVELOPMENT_DATABASE_URL,
-  schema: 'public',
+  ssl: isProduction ? { rejectUnauthorized: false } : undefined,
+   schema: 'public',
   migrationsTable: 'migrations',
-  ssl: isProduction ? { rejectUnauthorized: false } : undefined
 };
 
 export default databaseConfig;
