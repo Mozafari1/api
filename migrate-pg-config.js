@@ -5,6 +5,6 @@ module.exports = {
     connectionString: isProduction
         ?process.env.DATABASE_URL
         : process.env.DEVELOPMENT_DATABASE_URL,
-    ssl: isProduction ? { rejectUnauthorized: false } : undefined,
+    ssl: isProduction ? { rejectUnauthorized: false, ca: process.env.CACERT } : undefined,
     dir: './migrations',
 };
