@@ -8,7 +8,7 @@ const databaseConfig = {
   migrationsTable: 'migrations',
     ssl: isProduction ? {
         rejectUnauthorized: false,
-        sslmode: 'require'
+        sslmode: true
   } : false
 };
 
