@@ -1,7 +1,9 @@
-require('dotenv').config();  // Sørger for at .env filen lastes i ikke-produksjonsmiljøer
+require('dotenv').config();
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-   connectionString: DATABASE_URL,  // Bruker Heroku DATABASE_URL hvis tilgjengelig
+    connectionString: isProduction ? process.env.DATABASE_URL+"?sslmode=require" : process.env.DEVELOPMENT_DATABASE_URL,
   dir: './migrations',  // Stien til migrasjonsfilene
  ssl: { rejectUnauthorized: false } 
 

@@ -1,9 +1,9 @@
 import { Pool } from 'pg';
+import dbConfig from '../../config/databaseConfig';
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false  // Allows connection to a PostgreSQL instance with a self-signed certificate
-    }
+  connectionString: dbConfig.connectionString,
+  ssl: dbConfig.ssl
 });
 
 export default pool;
