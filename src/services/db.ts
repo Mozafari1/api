@@ -6,4 +6,9 @@ const pool = new Pool({
   ssl: dbConfig.ssl
 });
 
+pool.on('error', (err, client) => {
+  console.error('Unexpected error on idle client', err); // Logg feilen
+  process.exit(-1);
+});
+
 export default pool;
