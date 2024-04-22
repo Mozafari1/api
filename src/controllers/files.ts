@@ -749,6 +749,7 @@ export async function getInovixPrivacyImage(req: Request, res: Response): Promis
 }
 export async function getInovixLogos(req: Request, res: Response): Promise<void> {
   try {
+    console.log('getInovixLogos');
     const client = await pool.connect();
     const result = await client.query<File>(
       `SELECT file_name, type, special_type AS name 
@@ -756,6 +757,7 @@ export async function getInovixLogos(req: Request, res: Response): Promise<void>
        WHERE special_type IN ($1, $2, $3, $4, $5, $6, $7, $8) AND is_deleted = false`, 
       ['HeaderLogo', 'BannerMainPage', 'SubBannerMainPage', 'ServiceMainPage', 'AboutUsMainPage', 'FooterLogo', 'AboutUsPage', 'Privacy']
     );
+    console.log('result:', result);
     client.release();
     if (result.rowCount === 0) {
       res.status(404).json({ error: 'Files not found' });
