@@ -9,8 +9,7 @@ const databaseConfig = {
         : process.env.DEVELOPMENT_DATABASE_URL,
     ssl: isProduction
         ? {
-            rejectUnauthorized: false, // Dette tillater selvsignerte sertifikater, typisk for noen cloud-miljøer
-            ca: process.env.CACERT
+            rejectUnauthorized: false
         }
         : undefined, // Ingen SSL i utviklingsmiljø
     schema: 'public',
