@@ -259,21 +259,22 @@ const UserController = {
      );
     
     client.release();
-    const fileId = userProfile.rows[0]?.id;
+    // const fileId = userProfile.rows[0]?.id;
     // const fileType = userProfile.rows[0]?.type;
     // const fileName = userProfile.rows[0]?.name;
 
- 
+ console.log('User:', user);
 const token = generateToken(
     user.id,
     user.email,
     user.first_name,
     user.last_name,
   user.role || 'user',
-  fileId,
+  // fileId,
   // fileType,
   // fileName
 );
+  console.log('Token:', token);
     return res.status(200).json({ token });
   } catch (error) {
     console.error('Error logging in user:', error);
