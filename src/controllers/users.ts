@@ -260,8 +260,8 @@ const UserController = {
     
     client.release();
     const fileId = userProfile.rows[0]?.id;
-    const fileType = userProfile.rows[0]?.type;
-    const fileName = userProfile.rows[0]?.name;
+    // const fileType = userProfile.rows[0]?.type;
+    // const fileName = userProfile.rows[0]?.name;
 
  
 const token = generateToken(
@@ -271,8 +271,8 @@ const token = generateToken(
     user.last_name,
   user.role || 'user',
   fileId,
-  fileType,
-  fileName
+  // fileType,
+  // fileName
 );
     return res.status(200).json({ token });
   } catch (error) {

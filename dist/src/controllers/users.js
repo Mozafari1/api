@@ -152,7 +152,7 @@ const UserController = {
         }
     },
     async loginUser(req, res) {
-        var _a, _b, _c;
+        var _a;
         try {
             const { email, password } = req.body;
             if (!email || !password) {
@@ -191,9 +191,9 @@ const UserController = {
             const userProfile = await client.query('SELECT id, type, name FROM files WHERE user_id = $1 AND is_deleted = false LIMIT 1', [user.id]);
             client.release();
             const fileId = (_a = userProfile.rows[0]) === null || _a === void 0 ? void 0 : _a.id;
-            const fileType = (_b = userProfile.rows[0]) === null || _b === void 0 ? void 0 : _b.type;
-            const fileName = (_c = userProfile.rows[0]) === null || _c === void 0 ? void 0 : _c.name;
-            const token = (0, exports.generateToken)(user.id, user.email, user.first_name, user.last_name, user.role || 'user', fileId, fileType, fileName);
+            // const fileType = userProfile.rows[0]?.type;
+            // const fileName = userProfile.rows[0]?.name;
+            const token = (0, exports.generateToken)(user.id, user.email, user.first_name, user.last_name, user.role || 'user', fileId);
             return res.status(200).json({ token });
         }
         catch (error) {

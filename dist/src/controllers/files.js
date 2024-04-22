@@ -620,7 +620,6 @@ async function getInovixLogos(req, res) {
         const result = await client.query(`SELECT file_name, type, special_type AS name 
        FROM files 
        WHERE special_type IN ($1, $2, $3, $4, $5, $6, $7, $8) AND is_deleted = false`, ['HeaderLogo', 'BannerMainPage', 'SubBannerMainPage', 'ServiceMainPage', 'AboutUsMainPage', 'FooterLogo', 'AboutUsPage', 'Privacy']);
-        console.log('result:', result);
         client.release();
         if (result.rowCount === 0) {
             res.status(404).json({ error: 'Files not found' });
