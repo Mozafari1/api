@@ -28,7 +28,6 @@ async function createFeedback(req, res) {
         client.release();
         // Send the feedback link to the user
         const feedbackLink = `${domain}/feedback/${token}`;
-        console.log(feedbackLink);
         // Send feedbackLink to the user...
         res.status(201).json({ id: feedbackId, url: feedbackLink });
     }

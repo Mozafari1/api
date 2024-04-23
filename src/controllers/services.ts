@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 // Create multer instance with defined storage
 const upload = multer({ storage: storage });
 
-export async function createService(req: Request, res: Response): Promise<void> {
+export async function createServiceWithMulter(req: Request, res: Response): Promise<void> {
   try {
    if (!req.body.userId ) {
       res.status(400).json({ error: 'Something went wrong' });
@@ -83,7 +83,50 @@ export async function createService(req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
+export async function createService(req: Request, res: Response): Promise<void> {
+  try {
+   if (!req.body.userId ) {
+      res.status(400).json({ error: 'Something went wrong' });
+      return;
+   }
+    
+    const userId = req.body.userId;
+    // Handle file upload using multer
+      // Extract other form data from req.body
+      const {file_name, title, less_content, main_content, sub_title, sub_content,
+        sub_points_title, sub_point_titleA, sub_point_contentA, sub_point_titleB, sub_point_contentB, sub_point_titleC, sub_point_contentC, sub_point_titleD, sub_point_contentD, sub_point_titleE, sub_point_contentE, summary_title, summary_main_content, summary_sub_content, summary_sub_sub_content } = req.body;
+      // If file is uploaded, save the file to the server
+      if (file_name&& title && less_content && main_content && sub_title && sub_content &&
+        sub_points_title && sub_point_titleA && sub_point_contentA && sub_point_titleB && sub_point_contentB && sub_point_titleC && sub_point_contentC && sub_point_titleD && sub_point_contentD && sub_point_titleE && sub_point_contentE && summary_title && summary_main_content && summary_sub_content && summary_sub_sub_content
+        ) {
+        // Now you can save the file path to the database along with other form data
+        const client = await pool.connect();
+        const connection_id = await client.query<ConnectionsType>(
+            'SELECT * FROM connections_type WHERE name = $1',
+          ['Tjenester']
+        );
+        const result = await client.query<Service>(
+          'INSERT INTO services(title, less_content, main_content, sub_title, sub_content, sub_points_title, "sub_point_titleA", "sub_point_contentA", "sub_point_titleB", "sub_point_contentB", "sub_point_titleC", "sub_point_contentC", "sub_point_titleD", "sub_point_contentD", "sub_point_titleE", "sub_point_contentE", summary_title, summary_main_content, summary_sub_content, summary_sub_sub_content, created_by, updated_by) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22) RETURNING *',
+          [title, less_content, main_content, sub_title, sub_content, sub_points_title, sub_point_titleA, sub_point_contentA, sub_point_titleB, sub_point_contentB, sub_point_titleC, sub_point_contentC, sub_point_titleD, sub_point_contentD, sub_point_titleE, sub_point_contentE, summary_title, summary_main_content, summary_sub_content, summary_sub_sub_content, userId, userId]
+        );
+       
+       
+            const fileResult = await client.query<File>(
+                'INSERT INTO files(name, size,type,created_by, service_id, connection_type_id, file_name) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+                [file_name, 0 ,"img", userId, result.rows[0].id, connection_id.rows[0].id, file_name]
+            );
+        client.release();
+          res.status(201).json(result.rows[0]);
+        
+      } else {
+        res.status(400).json({ error: 'No file uploaded' });
+      }
+   
+  } catch (error) {
+    console.error('Error creating service:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
 export async function updateService(req: Request, res: Response): Promise<void> {
     try {
         const { id } = req.params;

@@ -27,6 +27,49 @@ const storage = multer_1.default.diskStorage({
 });
 // Create multer instance with defined storage
 const upload = (0, multer_1.default)({ storage: storage });
+// export async function createBlog(req: Request, res: Response): Promise<void> {
+//   try {
+//    if (!req.body.userId ) {
+//       res.status(400).json({ error: 'Something went wrong' });
+//       return;
+//    }
+//     const userId = req.body.userId;
+//     // Handle file upload using multer
+//     upload.single('image')(req, res, async (err) => {
+//       if (err) {
+//         console.error('Error uploading file:', err);
+//         res.status(500).json({ error: 'Internal server error' });
+//         return;
+//       }
+//       // Extract other form data from req.body
+//       const { title, description, sub_description, sub_sub_description } = req.body;
+//       // If file is uploaded, save the file to the server
+//       if (req.file && title && description ) {
+//         // Now you can save the file path to the database along with other form data
+//         const client = await pool.connect();
+//         const connection_id = await client.query<ConnectionsType>(
+//             'SELECT * FROM connections_type WHERE name = $1',
+//           ['Blogg']
+//         );
+//         const result = await client.query<Blog>(
+//           'INSERT INTO blogs(title, description, sub_description, sub_sub_description, created_by, updated_by) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
+//           [title, description, sub_description, sub_sub_description, userId, userId]
+//         );
+//         const fileResult = await client.query<File>(
+//                 'INSERT INTO files(name, size, type, created_by, blog_id, connection_type_id, file_name) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+//                 [req.file.filename, req.file.size, req.file.mimetype, userId, result.rows[0].id, connection_id.rows[0].id, req.file.filename]
+//             );
+//        client.release();
+//         res.status(201).json(result.rows[0]);
+//       } else {
+//         res.status(400).json({ error: 'No file uploaded' });
+//       }
+//     });
+//   } catch (error) {
+//     console.error('Error creating blog:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
 async function createBlog(req, res) {
     try {
         if (!req.body.userId) {
@@ -34,29 +77,21 @@ async function createBlog(req, res) {
             return;
         }
         const userId = req.body.userId;
-        // Handle file upload using multer
-        upload.single('image')(req, res, async (err) => {
-            if (err) {
-                console.error('Error uploading file:', err);
-                res.status(500).json({ error: 'Internal server error' });
-                return;
-            }
-            // Extract other form data from req.body
-            const { title, description, sub_description, sub_sub_description } = req.body;
-            // If file is uploaded, save the file to the server
-            if (req.file && title && description) {
-                // Now you can save the file path to the database along with other form data
-                const client = await db_1.default.connect();
-                const connection_id = await client.query('SELECT * FROM connections_type WHERE name = $1', ['Blogg']);
-                const result = await client.query('INSERT INTO blogs(title, description, sub_description, sub_sub_description, created_by, updated_by) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [title, description, sub_description, sub_sub_description, userId, userId]);
-                const fileResult = await client.query('INSERT INTO files(name, size, type, created_by, blog_id, connection_type_id, file_name) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *', [req.file.filename, req.file.size, req.file.mimetype, userId, result.rows[0].id, connection_id.rows[0].id, req.file.filename]);
-                client.release();
-                res.status(201).json(result.rows[0]);
-            }
-            else {
-                res.status(400).json({ error: 'No file uploaded' });
-            }
-        });
+        // Extract other form data from req.body
+        const { file_name, title, description, sub_description, sub_sub_description } = req.body;
+        // If file is uploaded, save the file to the server
+        if (file_name && title && description) {
+            // Now you can save the file path to the database along with other form data
+            const client = await db_1.default.connect();
+            const connection_id = await client.query('SELECT * FROM connections_type WHERE name = $1', ['Blogg']);
+            const result = await client.query('INSERT INTO blogs(title, description, sub_description, sub_sub_description, created_by, updated_by) VALUES($1, $2, $3, $4, $5, $6) RETURNING *', [title, description, sub_description, sub_sub_description, userId, userId]);
+            const fileResult = await client.query('INSERT INTO files(name, size, type, created_by, blog_id, connection_type_id, file_name) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *', [file_name, 0, "img", userId, result.rows[0].id, connection_id.rows[0].id, file_name]);
+            client.release();
+            res.status(201).json(result.rows[0]);
+        }
+        else {
+            res.status(400).json({ error: 'No file uploaded' });
+        }
     }
     catch (error) {
         console.error('Error creating blog:', error);

@@ -40,7 +40,6 @@ export async function createFeedback(req: Request, res: Response): Promise<void>
 
     // Send the feedback link to the user
     const feedbackLink = `${domain}/feedback/${token}`;
-    console.log(feedbackLink);
     // Send feedbackLink to the user...
 
     res.status(201).json({ id: feedbackId, url: feedbackLink });
