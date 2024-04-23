@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node dist/src/services/server.js",
+    "start": "npm run migrate-up && node dist/src/services/server.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node src/index.ts",
     "migrate": "node-pg-migrate",
     "migrate-up": "node-pg-migrate up",
     "migrate-create": "node-pg-migrate create",
-  
+    "postdeploy": "npm run migrate-up"
 
   },
   "keywords": [],
