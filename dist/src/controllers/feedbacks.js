@@ -45,7 +45,6 @@ async function approveFeedback(req, res) {
         }
         const userId = req.body.userId;
         const { id } = req.params;
-        console.log(id);
         if (!id) {
             res.status(400).json({ error: 'Missing required fields' });
             return;
@@ -131,7 +130,6 @@ async function updateFeedbackFromToken(req, res) {
             return;
         }
         const { name, role, feedback } = req.body;
-        console.log(req.body);
         const client = await db_1.default.connect();
         const result = await client.query('UPDATE feedbacks SET name = $1, role = $2, feedback = $3, updated_at = $4, is_waiting = $5, is_sent = $6, url = $7, is_active = $8  WHERE id = $9 RETURNING *', [name, role, feedback, new Date(), true, false, null, false, feedbackId]);
         client.release();
