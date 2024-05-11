@@ -2,15 +2,22 @@
 import { Request, Response } from 'express';
 import  pool from '../services/db';
 import Inboxes from '../models/Inboxes';
+import { verifyRecaptcha } from '../jwt/reCaptcha';
 
 export async function createInbox(req: Request, res: Response): Promise<void> {
   try {
 
-
+   
   // Extract other form data from req.body
       const {
-       name, email, message, phone_number, service_type, created_from_ip
-     } = req.body;
+       name, email, message, phone_number, service_type, created_from_ip, recaptcha_token
+      } = req.body;
+     const isCaptchaValid = await verifyRecaptcha(recaptcha_token);
+    if (!isCaptchaValid) {
+        res.status(403).json({ error: 'Failed to authenticate reCAPTCHA' });
+        return;
+    }
+    console.log('isCaptchaValid', isCaptchaValid);
       if (
             name && email && message
       ) {

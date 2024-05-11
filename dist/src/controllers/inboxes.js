@@ -5,10 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getInboxes = exports.deleteInbox = exports.updateInboxStatus = exports.updateInbox = exports.createInbox = void 0;
 const db_1 = __importDefault(require("../services/db"));
+const reCaptcha_1 = require("../jwt/reCaptcha");
 async function createInbox(req, res) {
     try {
         // Extract other form data from req.body
-        const { name, email, message, phone_number, service_type, created_from_ip } = req.body;
+        const { name, email, message, phone_number, service_type, created_from_ip, recaptcha_token } = req.body;
+        const isCaptchaValid = await (0, reCaptcha_1.verifyRecaptcha)(recaptcha_token);
+        if (!isCaptchaValid) {
+            res.status(403).json({ error: 'Failed to authenticate reCAPTCHA' });
+            return;
+        }
+        console.log('isCaptchaValid', isCaptchaValid);
         if (name && email && message) {
             // Now you can save the file path to the database along with other form data
             const client = await db_1.default.connect();
