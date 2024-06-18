@@ -12,7 +12,7 @@ export async function createContact(req: Request, res: Response): Promise<void> 
    }
     const userId = req.body.userId;
 
-  // Extract other form data from req.body
+ 
       const {
         first_name, last_name, email, phone_number, address,is_company, company_name, company_address, company_phone_number, company_email, company_website, company_logo
      } = req.body;
@@ -20,7 +20,7 @@ export async function createContact(req: Request, res: Response): Promise<void> 
           first_name && last_name && email && phone_number
       ) {
         
-        // Now you can save the file path to the database along with other form data
+       
         const client = await pool.connect();
             const result = await client.query<Contact>(
                 'INSERT INTO contacts(first_name, last_name, email, phone_number, address, is_company, company_name, company_address, company_phone_number, company_email, company_website, company_logo, created_by) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *',
